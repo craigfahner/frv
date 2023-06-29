@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="face-api.js"></script>
+    <script src="js/commons.js"></script>
+    <script src="js/faceDetectionControls.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  </head>
+  <body>
+    <div class="center-content page-container">
+      <div class="progress" id="loader">
+        <div class="indeterminate"></div>
+      </div>
+      <div id="canvascontainer">
+        <div style="position: relative" class="margin" id="videocontainer">
+          <video
+            onloadedmetadata="onPlay(this)"
+            id="inputVideo"
+            autoplay
+            muted
+            playsinline
+            width="640"
+            height="480"
+          ></video>
+          <canvas id="overlay" />
+        </div>
+      </div>
+      <div id="facedisplay" class="border">
+        <span class="heading"> Facial inferences</span>
+        <div id="noface" class="smallborder" style="display:none">
+          No face detected
+        </div>
+        <div id="facedata" class="smallborder" style="display:none">
+          <div class="statscontainer">
+            <span class="stats">Gender:</span>
+            <span class="stats stat" id="gender"></span>
+          </div>
+          <div class="statscontainer">
+          <span class="stats">Age:&nbsp;</span
+          ><span class="stats stat" id="age"></span>
+          </div>
+          <div class="statscontainer">
+          <span class="stats">Affect:</span><span class="stats stat" id="expressions"></span>
+
+          </div>
+        </div>
+      </div>
+      
+      <div id="detectiontimeline" class="border">
+        <span class="heading">Detection timeline</span>
+        <div id = "detectioncontainer" class="smallborder">
+          
+        </div>
+      </div>
+      
+      <div id="title" class="border">
+        Facial Data Dashboard
+      </div>
+
+      <a href="#" id="print" style="display:none">print detections</a>
+
+
+
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+  <script src="script.js"></script>
+</html>

@@ -1,0 +1,241 @@
+@font-face {
+  font-family: 'Inconsolata';
+  src: url(https://cdn.glitch.global/2865ae1a-cedd-4d5d-87f3-c30cc1ec758c/Inconsolata-VariableFont_wdth%2Cwght.ttf?v=1683732157322) format('truetype');
+}
+
+.page-container {
+  left: 0;
+  right: 0;
+  width: 1280px;
+  height: 640px;
+  background-color:#121212;
+  margin-top: 40px;
+/*   margin: auto;
+  
+  padding-left: 280px;
+  display: inline-flex !important; */
+}
+
+/* @media only screen and (max-width : 992px) {
+  .page-container {
+    padding-left: 0;
+    display: flex !important;
+  }
+} */
+
+#navbar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+body {
+  overflow:hidden;
+  background-color:#121212;
+  cursor:none;
+}
+
+/* .center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+} */
+
+.side-by-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.side-by-side >* {
+  margin: 0 5px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.margin-sm {
+  margin: 5px;
+}
+
+.margin {
+/*   margin: 20px; */
+}
+
+.button-sm {
+  padding: 0 10px !important;
+}
+
+.pad-sides-sm {
+  padding: 0 8px !important;
+}
+
+#github-link {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid;
+  margin-bottom: 10px;
+}
+
+
+
+#facesContainer canvas {
+  margin: 10px;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #26a69a;
+    border: 1px solid gray;
+    cursor: pointer;
+    color: #fff;
+    border-radius: .2em;
+}
+
+.stats{
+color:red;
+  font-weight:bold;
+  font-size:30px;
+}
+
+    /* position the overlay div to cover the window */
+    #overlay, .overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Make sure the p5.js canvas apears on top of the face-api canvas */
+    #videocontainer canvas {
+/*     width: 640px;
+    height: 480px; */
+    position: absolute;
+    left: 0; 
+      z-index:100;
+    }
+
+#canvascontainer {
+  padding-left:20px;
+  padding-top:20px;
+}
+
+#facedisplay {
+  position:absolute;
+  left: 680px;
+  top: 60px;
+  width:580px;
+  height: 360px;
+  padding-left:5px;
+}
+
+.border {
+    border-style:solid;
+  border-color:red;
+  border-width:2px;
+}
+
+.smallborder {
+    border-style:solid;
+  border-color:red;
+  border-width:1px;
+}
+
+.heading {
+  color:red;
+  font-family:'Inconsolata';
+  font-weight:bold;
+  font-size:16px;
+}
+
+#facedata {
+  position:absolute;
+  right:20px;
+  top:36px;
+  width:365px;
+  bottom:20px;
+  padding:10px;
+}
+
+#noface {
+  position:absolute;
+  right:20px;
+  top:36px;
+  width:365px;
+  bottom:20px;
+  padding:10px;
+  color:black;
+  font-size:40px;
+  font-family: 'Inconsolata';
+  text-align:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:#ff000080;
+}
+
+.statscontainer {
+  width:100%;
+    display:flex;
+  justify-content:space-between;
+}
+
+#expressions {
+  text-align:right;
+}
+
+.stat {
+  color:white;
+}
+
+#title {
+  position:absolute;
+  top:560px;
+  left:20px;
+  font-family: 'Inconsolata';
+  color:black;
+  padding-left:10px;
+  padding-right:10px;
+  width:640px;
+  text-align:center;
+  font-size:35px;
+/*   -webkit-text-stroke-color: red;
+  -webkit-text-stroke-width:2px; */
+  height:94px;
+  background-color:#ff000080;
+  font-stretch: extra-expanded;
+  text-transform: uppercase;
+  padding-top: 16px;
+}
+
+#detectiontimeline {
+  position:absolute;
+  left: 680px;
+  top: 440px;
+  font-family: 'Inconsolata';
+  width:580px;
+  height: 214px;
+  padding-left:5px;
+}
+
+#detectioncontainer {
+  position:absolute;
+  right:20px;
+  top:36px;
+  left:20px;
+  bottom:20px;
+  padding:10px;
+}
+
+.flexy {
+  display: flex;
+  justify-content: space-between;
+  color:white;
+}
+
