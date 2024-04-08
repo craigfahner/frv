@@ -18,9 +18,9 @@
   </head>
   <body>
     <div class="center-content page-container">
-      <div class="progress" id="loader">
+      <!-- <div class="progress" id="loader">
         <div class="indeterminate"></div>
-      </div>
+      </div> -->
       <div id="canvascontainer">
         <div style="position: relative" class="margin" id="videocontainer">
           <video
@@ -36,21 +36,21 @@
         </div>
       </div>
       <div id="facedisplay" class="border">
-        <span class="heading"> Facial inferences</span>
+        <!-- <span class="heading"> Facial inferences</span> -->
         <div id="noface" class="smallborder" style="display:none">
           No face detected
         </div>
         <div id="facedata" class="smallborder" style="display:none">
           <div class="statscontainer">
-            <span class="stats">Gender:</span>
-            <span class="stats stat" id="gender"></span>
+            <span class="stats" style="display:none">Gender:</span>
+            <span class="stats stat" id="gender" style="display:none"></span>
           </div>
           <div class="statscontainer">
-          <span class="stats">Age:&nbsp;</span
-          ><span class="stats stat" id="age"></span>
+          <span class="stats" style="display:none">Age:&nbsp;</span
+          ><span class="stats stat" id="age" style="display:none"></span>
           </div>
           <div class="statscontainer">
-          <span class="stats">Affect:</span><span class="stats stat" id="expressions"></span>
+          <span class="stats" style="display:none">Affect:</span><span class="stats stat" id="expressions" style="display:none"></span>
 
           </div>
         </div>

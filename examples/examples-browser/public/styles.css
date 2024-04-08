@@ -8,7 +8,7 @@
   right: 0;
   width: 1280px;
   height: 640px;
-  background-color:#121212;
+  background-color:white;
   margin-top: 40px;
 /*   margin: auto;
   
@@ -31,7 +31,7 @@
 
 body {
   overflow:hidden;
-  background-color:#121212;
+  background-color:white;
   cursor:none;
 }
 
@@ -95,7 +95,7 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .stats{
-color:red;
+color:black;
   font-weight:bold;
   font-size:30px;
 }
@@ -137,18 +137,18 @@ color:red;
 
 .border {
     border-style:solid;
-  border-color:red;
+  border-color:black;
   border-width:2px;
 }
 
 .smallborder {
     border-style:solid;
-  border-color:red;
+  border-color:black;
   border-width:1px;
 }
 
 .heading {
-  color:red;
+  color:black;
   font-family:'Inconsolata';
   font-weight:bold;
   font-size:16px;
@@ -170,7 +170,7 @@ color:red;
   width:365px;
   bottom:20px;
   padding:10px;
-  color:black;
+  color:white;
   font-size:40px;
   font-family: 'Inconsolata';
   text-align:center;
@@ -208,7 +208,7 @@ color:red;
 /*   -webkit-text-stroke-color: red;
   -webkit-text-stroke-width:2px; */
   height:94px;
-  background-color:#ff000080;
+  /* background-color:#ff000080; */
   font-stretch: extra-expanded;
   text-transform: uppercase;
   padding-top: 16px;
@@ -216,6 +216,7 @@ color:red;
 
 #detectiontimeline {
   position:absolute;
+  color:black;
   left: 680px;
   top: 440px;
   font-family: 'Inconsolata';
@@ -236,6 +237,6 @@ color:red;
 .flexy {
   display: flex;
   justify-content: space-between;
-  color:white;
+  color:black;
 }
 

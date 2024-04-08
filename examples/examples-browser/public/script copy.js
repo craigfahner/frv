@@ -9,7 +9,6 @@ let detectionResult;
 let landmarkCoords;
 let expressions;
 let genderResult;
-let genderStr = "";
 let affect;
 let interpolatedAge;
 let faceScore;
@@ -19,9 +18,7 @@ let newFaceDetection = true;
 let storedObjectLength = 0;
 let detectionTimeline = [];
 let timeout = 900000;
-let items = [];
 var videoDeviceId;
-let myCanvas;
 
 // let timeout = 60000;
 
@@ -42,25 +39,25 @@ setTimeout(function(){
 //   document.body.requestFullscreen();
 // });
 
-// printButton.addEventListener(
-//   "click",
-//   () => {
-//     //console.log(objects);
-//     if (detectionResult != null) {
-//       // console.log(detectionResult);
-//       //console.log(landmarkCoords);
-//       // for(var expression in detectionResult.expressions){
-//       //   console.log(expression);
-//       // }
-//       // console.log(expressions);
-//       // console.log(detectionResult.detection.box.x);
-//       // console.log(detectionResult.detection.box.y);
-//       // console.log(detectionResult.detection.box.width);
-//       // console.log(detectionResult.detection.box.height);
-//     }
-//   },
-//   false
-// );
+printButton.addEventListener(
+  "click",
+  () => {
+    //console.log(objects);
+    if (detectionResult != null) {
+      // console.log(detectionResult);
+      //console.log(landmarkCoords);
+      // for(var expression in detectionResult.expressions){
+      //   console.log(expression);
+      // }
+      // console.log(expressions);
+      // console.log(detectionResult.detection.box.x);
+      // console.log(detectionResult.detection.box.y);
+      // console.log(detectionResult.detection.box.width);
+      // console.log(detectionResult.detection.box.height);
+    }
+  },
+  false
+);
 
 function updateTimeStats(timeInMs) {
   forwardTimes = [timeInMs].concat(forwardTimes).slice(0, 30);
@@ -77,164 +74,162 @@ function interpolateAgePredictions(age) {
   return avgPredictedAge;
 }
 
-// async function onPlay() {
-//   const videoEl = $("#inputVideo").get(0);
+async function onPlay() {
+  const videoEl = $("#inputVideo").get(0);
 
-//   if (videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded()) {
-//     return setTimeout(() => onPlay());
-//   }
+  if (videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded()) {
+    return setTimeout(() => onPlay());
+  }
 
-//   const options = getFaceDetectorOptions();
+  const options = getFaceDetectorOptions();
 
-//   const ts = Date.now();
+  const ts = Date.now();
 
-//   const result = await faceapi
-//     .detectSingleFace(videoEl, options)
-//     .withAgeAndGender()
-//     .withFaceExpressions();
-//   const landmarkResult = await faceapi
-//     .detectSingleFace(videoEl, options)
-//     .withFaceLandmarks();
+  const result = await faceapi
+    .detectSingleFace(videoEl, options)
+    .withAgeAndGender()
+    .withFaceExpressions();
+  const landmarkResult = await faceapi
+    .detectSingleFace(videoEl, options)
+    .withFaceLandmarks();
 
-//   detectionResult = result;
+  detectionResult = result;
 
-//   updateTimeStats(Date.now() - ts);
-//   const canvas = $("#overlay").get(0);
-//   if (landmarkResult && result) {
-//     const dims = faceapi.matchDimensions(canvas, videoEl, true);
-//     const resizedLMResult = faceapi.resizeResults(landmarkResult, dims);
-//     landmarkCoords = resizedLMResult.landmarks.positions;
-//     const resizedResult = faceapi.resizeResults(result, dims);
-//     // if (withBoxes) {
-//     //   faceapi.draw.drawDetections(canvas, resizedResult, {
-//     //     // options not working?
-//     //     lineWidth: 1,
-//     //     textColor: "red",
-//     //     boxColor: "red",
-//     //     withScore: false,
-//     //   });
-//     // }
+  updateTimeStats(Date.now() - ts);
+  const canvas = $("#overlay").get(0);
+  if (landmarkResult && result) {
+    const dims = faceapi.matchDimensions(canvas, videoEl, true);
+    const resizedLMResult = faceapi.resizeResults(landmarkResult, dims);
+    landmarkCoords = resizedLMResult.landmarks.positions;
+    const resizedResult = faceapi.resizeResults(result, dims);
+    // if (withBoxes) {
+    //   faceapi.draw.drawDetections(canvas, resizedResult, {
+    //     // options not working?
+    //     lineWidth: 1,
+    //     textColor: "red",
+    //     boxColor: "red",
+    //     withScore: false,
+    //   });
+    // }
 
-//     const { age, gender, genderProbability } = resizedResult;
-//     const minConfidence = 0.05;
+    const { age, gender, genderProbability } = resizedResult;
+    const minConfidence = 0.05;
 
-//     // interpolate gender predictions over last 30 frames
-//     // to make the displayed age more stable
-//     interpolatedAge = interpolateAgePredictions(age);
+    // interpolate gender predictions over last 30 frames
+    // to make the displayed age more stable
+    interpolatedAge = interpolateAgePredictions(age);
 
-//     // new faceapi.draw.DrawTextField(
-//     //   [
-//     //     `${faceapi.utils.round(interpolatedAge, 0)} years`,
-//     //     `${gender} (${faceapi.utils.round(genderProbability)})`,
-//     //   ],
-//     //   result.detection.box.topLeft
-//     // ).draw(canvas);
+    // new faceapi.draw.DrawTextField(
+    //   [
+    //     `${faceapi.utils.round(interpolatedAge, 0)} years`,
+    //     `${gender} (${faceapi.utils.round(genderProbability)})`,
+    //   ],
+    //   result.detection.box.topLeft
+    // ).draw(canvas);
 
-//     // faceapi.draw.drawFaceLandmarks(canvas, resizedLMResult, {
-//     //   drawLines: false,
-//     // }); // unclear why these options don't work
-//     // faceapi.draw.drawFaceExpressions(canvas, resizedResult, minConfidence);
+    // faceapi.draw.drawFaceLandmarks(canvas, resizedLMResult, {
+    //   drawLines: false,
+    // }); // unclear why these options don't work
+    // faceapi.draw.drawFaceExpressions(canvas, resizedResult, minConfidence);
 
-//     // dump results into vars, display on page
-//     genderResult = result.gender;
-//     genderScore = result.genderProbability;
-//     let genderStr =
-//       genderResult +
-//       " (" +
-//       (Math.round(genderScore * 100) / 100).toFixed(2) +
-//       ")";
-//     genderDisplay.innerHTML = genderStr;
-//     interpolatedAge = (Math.round(interpolatedAge * 100) / 100).toFixed(0);
-//     ageDisplay.innerHTML = interpolatedAge;
+    // dump results into vars, display on page
+    genderResult = result.gender;
+    genderScore = result.genderProbability;
+    let genderStr =
+      genderResult +
+      " (" +
+      (Math.round(genderScore * 100) / 100).toFixed(2) +
+      ")";
+    genderDisplay.innerHTML = genderStr;
+    interpolatedAge = (Math.round(interpolatedAge * 100) / 100).toFixed(0);
+    ageDisplay.innerHTML = interpolatedAge;
 
-//     expressions = result.expressions;
+    expressions = result.expressions;
 
-//     // Create items array
-//     var items = Object.keys(expressions).map(function (key) {
-//       return [key, expressions[key]];
-//     });
+    // Create items array
+    var items = Object.keys(expressions).map(function (key) {
+      return [key, expressions[key]];
+    });
 
-//     // Sort the array based on the second element
-//     items.sort(function (first, second) {
-//       return second[1] - first[1];
-//     });
+    // Sort the array based on the second element
+    items.sort(function (first, second) {
+      return second[1] - first[1];
+    });
 
-//     expressionDisplay.innerHTML = "";
-//     // for (var i = 0; i < items.length; i++) {
-//     for (var i = 0; i < 4; i++) {
-//       // display sorted array
-//       expressionDisplay.innerHTML =
-//         expressionDisplay.innerHTML +
-//         items[i][0] +
-//         ": " +
-//         (Math.round(items[i][1] * 100) / 100).toFixed(2) +
-//         "<br>";
-//     }
-//     affect = items[0][0];
+    expressionDisplay.innerHTML = "";
+    // for (var i = 0; i < items.length; i++) {
+    for (var i = 0; i < 4; i++) {
+      // display sorted array
+      expressionDisplay.innerHTML =
+        expressionDisplay.innerHTML +
+        items[i][0] +
+        ": " +
+        (Math.round(items[i][1] * 100) / 100).toFixed(2) +
+        "<br>";
+    }
+    affect = items[0][0];
 
-//     // dump face rect coords into something
-//   }
+    // dump face rect coords into something
+  }
 
-//   setTimeout(() => onPlay());
-// }
+  setTimeout(() => onPlay());
+}
 
-// async function run() {
-//   // load face detection and face expression recognition models
-//   await changeFaceDetector(TINY_FACE_DETECTOR);
-//   await faceapi.loadFaceLandmarkModel("/");
-//   await faceapi.nets.ageGenderNet.load("/");
-//   await faceapi.loadFaceExpressionModel("/");
-//   //await faceapi.loadFaceRecognitionModel('/');
+async function run() {
+  // load face detection and face expression recognition models
+  await changeFaceDetector(TINY_FACE_DETECTOR);
+  await faceapi.loadFaceLandmarkModel("/");
+  await faceapi.nets.ageGenderNet.load("/");
+  await faceapi.loadFaceExpressionModel("/");
+  //await faceapi.loadFaceRecognitionModel('/');
 
-//   changeInputSize(224);
+  changeInputSize(224);
 
   // try to access users webcam and stream the images
   // to the video element
-//   const stream = await navigator.mediaDevices.getUserMedia({
-//     video: {
-//       width: 640,
-//       height: 480,
-//       // deviceId: {
-//       //   exact: videoDeviceId,
-//       // },
-//     },
-//   });
-//   const videoEl = $("#inputVideo").get(0);
-//   videoEl.srcObject = stream;
-// }
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: {
+      width: 640,
+      height: 480,
+      // deviceId: {
+      //   exact: videoDeviceId,
+      // },
+    },
+  });
+  const videoEl = $("#inputVideo").get(0);
+  videoEl.srcObject = stream;
+}
 
-// function updateResults() {}
+function updateResults() {}
 
-// $(document).ready(function () {
-//   // renderNavBar('#navbar', 'webcam_age_and_gender_recognition')
-//   initFaceDetectionControls();
-//   navigator.mediaDevices.enumerateDevices().then((devices) => {
-//     console.log(devices);
-//     console.log(devices[devices.length - 1].label);
-//     console.log(devices[devices.length - 1].deviceId);
-//     videoDeviceId = devices[devices.length - 1].deviceId;
-//     run();
-//   });
+$(document).ready(function () {
+  // renderNavBar('#navbar', 'webcam_age_and_gender_recognition')
+  initFaceDetectionControls();
+  navigator.mediaDevices.enumerateDevices().then((devices) => {
+    console.log(devices);
+    console.log(devices[devices.length - 1].label);
+    console.log(devices[devices.length - 1].deviceId);
+    videoDeviceId = devices[devices.length - 1].deviceId;
+    run();
+  });
   
-// });
+});
 
 // p5.js stuff
 
 function setup() {
-  myCanvas = createCanvas(1280, 720);
-  textFont('Inconsolata');
-
+  let myCanvas = createCanvas(1280, 720);
   myCanvas.parent("videocontainer");
   angleMode(DEGREES);
-	video = createCapture(VIDEO, async () => {
-		// read machine learning models - refer to the library api doc https://github.com/justadudewhohacks/face-api.js/
-		await faceapi.loadSsdMobilenetv1Model('./');
-		await faceapi.loadFaceLandmarkModel('./');
-		await faceapi.loadFaceRecognitionModel('./');
-    await faceapi.nets.ageGenderNet.load("/");
-		await faceapi.loadFaceExpressionModel('./');
-		getExpressions();
-	});
+  video = createCapture({
+    video: {
+      width: 640,
+      height: 480,
+      // deviceId: {
+      //   exact: videoDeviceId,
+      // },
+    },
+  });
   video.size(640, 480);
   video.hide();
 }
@@ -243,11 +238,7 @@ yolo = ml5.objectDetector("yolo", detect);
 
 function draw() {
   clear();
-  //background(255);
-
-  if(video){
-    image(video,0,0,640,480);
-  }
+  //background(0);
 
   if (detectionResult == null) {
     detect();
@@ -430,13 +421,12 @@ function draw() {
       
       // do it again but copy to other side
       push();
-      translate(675, 170);
+      translate(655, 210);
       let scaleFactor = map(dist(landmarkCoords[0].x, landmarkCoords[0].y,landmarkCoords[16].x, landmarkCoords[16].y),85,170,1.3,0.7);
 
-      // scale(scaleFactor);
-      scale(0.55);
+      scale(scaleFactor);
       //simplified mesh drawing
-      stroke(0);
+      stroke(255, 255, 255, 100);
 
       beginShape();
       vertex(
@@ -625,7 +615,7 @@ function draw() {
       );
       endShape();
 
-      stroke(0);
+      stroke(255);
 
       // draw face outline
       beginShape();
@@ -709,12 +699,7 @@ function draw() {
       endShape(CLOSE);
 
       pop();
-      push();
-      fill(255);
-      stroke(0);
-
-      //rect(660,360,500,200);
-      pop();
+      
       stroke(255, 0, 0);
       strokeWeight(2);
       // draw detection box
@@ -725,31 +710,6 @@ function draw() {
         detectionResult.detection.box.width,
         detectionResult.detection.box.height
       );
-
-// display text here
-push();
-textAlign(LEFT);
-fill(0);
-noStroke();
-textSize(32);
-fill(0);
-textStyle(BOLD);
-text('Gender:',864,80);
-text('Age:',864,125);
-text('Affect:',864,170);
-textAlign(RIGHT);
-text(genderStr,1210,80);
-text(interpolatedAge,1210,125);
-for (let i = 0; i < 4; i++) {
-  // display sorted array
-  let affectStr =
-  items[i][0] +
-    ": " +
-    (Math.round(items[i][1] * 100) / 100).toFixed(2);
-  text(affectStr,1210,170+(i*45));
-}
-pop();
-
     } else {
       if(newFaceDetection==false){
         document.getElementById("facedata").style.display = "none";
@@ -758,14 +718,6 @@ pop();
       newFaceDetection = true;
     }
   }
-  push();
-fill(255);
-noStroke();
-textSize(16);
-fill(0);
-textStyle(BOLD);
-text('Facial inferences',667,20);
-pop();
 }
 
 function addTimelineEvent(text) {
@@ -824,74 +776,4 @@ function detect() {
       // detect();
     });
   }
-}
-
-async function getExpressions(){
-  const options = getFaceDetectorOptions();
-  const ts = Date.now();
-	result = await faceapi.detectSingleFace(video.elt, options).withFaceLandmarks().withAgeAndGender().withFaceExpressions();
-	updateTimeStats(Date.now() - ts);
-  if (result) {
-    detectionResult = result;
-    const dims = faceapi.matchDimensions(video, video, true);
-    const resizedLMResult = faceapi.resizeResults(result, dims);
-    landmarkCoords = resizedLMResult.landmarks.positions;
-    const resizedResult = faceapi.resizeResults(result, dims);
-    const { age, gender, genderProbability } = resizedResult;
-    const minConfidence = 0.05;
-
-    // interpolate gender predictions over last 30 frames
-    // to make the displayed age more stable
-    interpolatedAge = interpolateAgePredictions(age);
-    genderResult = result.gender;
-    genderScore = result.genderProbability;
-    genderStr =
-      genderResult +
-      " (" +
-      (Math.round(genderScore * 100) / 100).toFixed(2) +
-      ")";
-    genderDisplay.innerHTML = genderStr;
-    interpolatedAge = (Math.round(interpolatedAge * 100) / 100).toFixed(0);
-    ageDisplay.innerHTML = interpolatedAge;
-
-    expressions = result.expressions;
-
-    // Create items array
-    items = Object.keys(expressions).map(function (key) {
-      return [key, expressions[key]];
-    });
-
-    // Sort the array based on the second element
-    items.sort(function (first, second) {
-      return second[1] - first[1];
-    });
-
-    expressionDisplay.innerHTML = "";
-    // for (var i = 0; i < items.length; i++) {
-    for (var i = 0; i < 4; i++) {
-      // display sorted array
-      expressionDisplay.innerHTML =
-        expressionDisplay.innerHTML +
-        items[i][0] +
-        ": " +
-        (Math.round(items[i][1] * 100) / 100).toFixed(2) +
-        "<br>";
-    }
-
-
-
-
-    affect = items[0][0];
-
-  }
-  
-  getExpressions(); // recursively call getExpressions function forever
-
-}
-
-function keyTyped(){
-  if(key == 's'){
-    savedImg = myCanvas.get(675,30,550,300);
-     savedImg.save('my-painting', 'png');
-   }
 }
