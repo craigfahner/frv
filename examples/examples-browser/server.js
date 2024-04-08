@@ -1,8 +1,17 @@
 const express = require('express')
 const path = require('path')
 const { get } = require('request')
+const WebSocket = require('ws');
+const http = require('http');
+const Gpio = require('orange-pi-gpio'); // comment these out when not running on orangepi
+let gpio5 = new Gpio({pin:5}); // this one too
+
 
 const app = express()
+const server = http.createServer(app);
+const wss = new WebSocket.Server({server});
+
+let gpioState = false;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -48,7 +57,19 @@ app.post('/fetch_external_image', async (req, res) => {
   }
 })
 
-app.listen(3000, () => console.log('Listening on port 3000!'))
+wss.on('connection', function connection(ws) {
+  console.log('Client connected');
+
+  // Handle messages received from the client
+  ws.on('message', function incoming(message) {
+      console.log('Received message from client: ', message);
+  });
+
+  // Send a message to the client
+  ws.send('saveimage');
+});
+
+server.listen(3000, () => console.log('Listening on port 3000!'))
 
 function request(url, returnBuffer = true, timeout = 10000) {
   return new Promise(function(resolve, reject) {
@@ -71,3 +92,15 @@ function request(url, returnBuffer = true, timeout = 10000) {
     })
   })
 }
+
+
+
+function readGPIO(){
+  gpio5.read()
+  .then((state)=>{
+      console.log(state); //state of pin 5
+      gpioState = state;
+  });
+}
+
+setInterval(readGPIO, 100);

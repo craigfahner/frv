@@ -891,7 +891,21 @@ async function getExpressions(){
 
 function keyTyped(){
   if(key == 's'){
-    savedImg = myCanvas.get(675,30,550,300);
+     savedImg = myCanvas.get(675,30,550,300);
      savedImg.save('my-painting', 'png');
    }
 }
+
+const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = function() {
+            console.log('Connected to server');
+        };
+
+        ws.onmessage = function(event) {
+            console.log('Received message from server: ', event.data);
+
+            // Trigger your client-side function here
+            // For example:
+            // myFunction();
+        };
