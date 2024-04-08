@@ -4,7 +4,8 @@ const { get } = require('request')
 const WebSocket = require('ws');
 const http = require('http');
 const Gpio = require('orange-pi-gpio'); // comment these out when not running on orangepi
-let gpio5 = new Gpio({pin:5}); // this one too
+let gpio5 = new Gpio({pin:1,mode:'in'}); // this one too
+let printing = false;
 
 
 const app = express()
@@ -66,7 +67,7 @@ wss.on('connection', function connection(ws) {
   });
 
   // Send a message to the client
-  ws.send('saveimage');
+  //ws.send('saveimage');
 });
 
 server.listen(3000, () => console.log('Listening on port 3000!'))
@@ -98,9 +99,25 @@ function request(url, returnBuffer = true, timeout = 10000) {
 function readGPIO(){
   gpio5.read()
   .then((state)=>{
-      console.log(state); //state of pin 5
+      //console.log(state); //state of pin 5
       gpioState = state;
+      if(state == 0 && printing == false){
+        console.log("button press detected");
+        ws.send('saveimage');
+        togglePrinting();
+      }
   });
 }
 
 setInterval(readGPIO, 100);
+
+async function togglePrinting() {
+  printing = true; // Set printing to true
+  console.log('Printing set to true');
+
+  // Wait for 10 seconds
+  await new Promise(resolve => setTimeout(resolve, 10000));
+
+  printing = false; // Set printing to false after 10 seconds
+  console.log('Printing set to false');
+}
