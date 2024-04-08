@@ -103,7 +103,13 @@ function readGPIO(){
       gpioState = state;
       if(state == 0 && printing == false){
         console.log("button press detected");
-        ws.send('saveimage');
+        const client = wss.clients.values().next().value;
+        if (client) {
+          // Sending the message
+          client.send('saveimage');
+        } else {
+          console.log('No client connected');
+        }
         togglePrinting();
       }
   });
