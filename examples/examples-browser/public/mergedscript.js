@@ -21,6 +21,7 @@ let detectionTimeline = [];
 let timeout = 900000;
 var videoDeviceId;
 let items = [];
+let myCanvas;
 
 
 // let timeout = 60000;
@@ -221,7 +222,7 @@ $(document).ready(function () {
 // p5.js stuff
 
 function setup() {
-  let myCanvas = createCanvas(1280, 720);
+  myCanvas = createCanvas(1280, 720);
   textFont('Inconsolata');
 
   myCanvas.parent("videocontainer");
