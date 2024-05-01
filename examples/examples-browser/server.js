@@ -3,6 +3,7 @@ const path = require('path')
 const { get } = require('request')
 const WebSocket = require('ws');
 const http = require('http');
+const bash = require("child_process");
 const Gpio = require('orange-pi-gpio'); // comment these out when not running on orangepi
 let gpio5 = new Gpio({pin:1,mode:'in'}); // this one too
 let printing = false;
@@ -110,6 +111,13 @@ function readGPIO(){
         } else {
           console.log('No client connected');
         }
+        bash.execFile('/home/orangepi/Downloads/print.sh', (err,stdout,stderr) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log(`stdout from print script: ${stdout.toString()}`);
+          }
+        });
         togglePrinting();
       }
   });
@@ -120,6 +128,7 @@ setInterval(readGPIO, 100);
 async function togglePrinting() {
   printing = true; // Set printing to true
   console.log('Printing set to true');
+  
 
   // Wait for 10 seconds
   await new Promise(resolve => setTimeout(resolve, 10000));
