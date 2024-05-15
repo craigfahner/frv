@@ -4,7 +4,7 @@ const { get } = require('request')
 const WebSocket = require('ws');
 const http = require('http');
 //const bash = require("child_process");
-const { exec } = require('child_process');
+const subProcess = require('child_process');
 const Gpio = require('orange-pi-gpio'); // comment these out when not running on orangepi
 let gpio5 = new Gpio({pin:1,mode:'in'}); // this one too
 let printing = false;
@@ -121,13 +121,14 @@ function readGPIO(){
         //     console.log(`stdout from print script: ${stdout.toString()}`);
         //   }
         // });
-        const myShellScript = exec('sh /home/orangepi/Downloads/print.sh');
-        myShellScript.stdout.on('data', (data)=>{
-          console.log(data); 
-          // do whatever you want here with data
-        });
-        myShellScript.stderr.on('data', (data)=>{
-            console.error(data);
+        subProcess.exec('lp /home/orangepi/Downloads/image.png',(err, stdout, stderr) => {
+          if (err) {
+            console.error(err)
+            process.exit(1)
+          } else {
+            console.log(`The stdout Buffer from shell: ${stdout.toString()}`)
+            console.log(`The stderr Buffer from shell: ${stderr.toString()}`)
+          }
         });
       
         togglePrinting();
@@ -140,7 +141,8 @@ setInterval(readGPIO, 100);
 async function togglePrinting() {
   printing = true; // Set printing to true
   console.log('Printing set to true');
-  
+  await new Promise(resolve => setTimeout(resolve, 1000)); // wait 1 sec
+
 
   // Wait for 10 seconds
   await new Promise(resolve => setTimeout(resolve, 10000));
