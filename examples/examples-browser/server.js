@@ -11,6 +11,7 @@ let printing = false;
 const bashScriptPath = '/home/orangepi/Downloads/print.sh';
 
 
+
 const app = express()
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
@@ -120,14 +121,15 @@ function readGPIO(){
         //     console.log(`stdout from print script: ${stdout.toString()}`);
         //   }
         // });
-        exec(`bash ${bashScriptPath}`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Error executing the script: ${error}`);
-            return;
-          }
-          console.log(`Script output: ${stdout}`);
-          console.error(`Script errors: ${stderr}`);
+        const myShellScript = exec('sh /home/orangepi/Downloads/print.sh');
+        myShellScript.stdout.on('data', (data)=>{
+          console.log(data); 
+          // do whatever you want here with data
         });
+        myShellScript.stderr.on('data', (data)=>{
+            console.error(data);
+        });
+      
         togglePrinting();
       }
   });
