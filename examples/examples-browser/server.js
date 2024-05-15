@@ -133,11 +133,12 @@ setInterval(readGPIO, 100);
 async function togglePrinting() {
   printing = true; // Set printing to true
   console.log('Printing set to true');
-  await new Promise(resolve => setTimeout(resolve, 1000)); // wait 1 sec
+  await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2 sec
+  console.log('attempting to print');
   subProcess.exec('lp /home/orangepi/Downloads/image.png',(err, stdout, stderr) => {
     if (err) {
       console.error(err)
-      process.exit(1)
+      //process.exit(1)
     } else {
       console.log(`The stdout Buffer from shell: ${stdout.toString()}`)
       console.log(`The stderr Buffer from shell: ${stderr.toString()}`)
