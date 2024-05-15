@@ -107,20 +107,18 @@ function readGPIO(){
       gpioState = state;
       if(state == 0 && printing == false){
         console.log("button press detected");
-        const client = wss.clients.values().next().value;
-        if (client) {
-          // Sending the message
+        // const client = wss.clients.values().next().value;
+        // if (client) {
+        //   // Sending the message
+        //   client.send('saveimage');
+        // } else {
+        //   console.log('No client connected');
+        // }
+        // try this: sends to all clients instead of just one
+        wss.clients.forEach(function each(client){
           client.send('saveimage');
-        } else {
-          console.log('No client connected');
-        }
-        // bash.execFile('/home/orangepi/Downloads/print.sh', (err,stdout,stderr) => {
-        //   if (err) {
-        //     console.error(err);
-        //   } else {
-        //     console.log(`stdout from print script: ${stdout.toString()}`);
-        //   }
-        // });
+        });
+
 
       
         togglePrinting();
@@ -145,8 +143,8 @@ async function togglePrinting() {
     }
   });
 
-  // Wait for 10 seconds
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  // Wait for 7 seconds
+  await new Promise(resolve => setTimeout(resolve, 7000));
 
   printing = false; // Set printing to false after 10 seconds
   console.log('Printing set to false');
