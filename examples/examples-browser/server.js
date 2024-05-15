@@ -3,10 +3,12 @@ const path = require('path')
 const { get } = require('request')
 const WebSocket = require('ws');
 const http = require('http');
-const bash = require("child_process");
+//const bash = require("child_process");
+const { exec } = require('child_process');
 const Gpio = require('orange-pi-gpio'); // comment these out when not running on orangepi
 let gpio5 = new Gpio({pin:1,mode:'in'}); // this one too
 let printing = false;
+const bashScriptPath = '/home/orangepi/Downloads/print.sh';
 
 
 const app = express()
@@ -111,12 +113,20 @@ function readGPIO(){
         } else {
           console.log('No client connected');
         }
-        bash.execFile('/home/orangepi/Downloads/print.sh', (err,stdout,stderr) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(`stdout from print script: ${stdout.toString()}`);
+        // bash.execFile('/home/orangepi/Downloads/print.sh', (err,stdout,stderr) => {
+        //   if (err) {
+        //     console.error(err);
+        //   } else {
+        //     console.log(`stdout from print script: ${stdout.toString()}`);
+        //   }
+        // });
+        exec(`bash ${bashScriptPath}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`Error executing the script: ${error}`);
+            return;
           }
+          console.log(`Script output: ${stdout}`);
+          console.error(`Script errors: ${stderr}`);
         });
         togglePrinting();
       }

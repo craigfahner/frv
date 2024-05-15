@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Inconsolata';
-  src: url(https://cdn.glitch.global/2865ae1a-cedd-4d5d-87f3-c30cc1ec758c/Inconsolata-VariableFont_wdth%2Cwght.ttf?v=1683732157322) format('truetype');
+  src: url(Inconsolata.ttf) format('truetype');
 }
 
 .page-container {
