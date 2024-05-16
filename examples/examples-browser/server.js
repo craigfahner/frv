@@ -119,8 +119,6 @@ function readGPIO(){
           client.send('saveimage');
         });
 
-
-      
         togglePrinting();
       }
   });
@@ -142,9 +140,20 @@ async function togglePrinting() {
       console.log(`The stderr Buffer from shell: ${stderr.toString()}`)
     }
   });
-
-  // Wait for 7 seconds
-  await new Promise(resolve => setTimeout(resolve, 7000));
+  // wait 2 seconds then delete the file
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  console.log("deleting file");
+  subProcess.exec('rm /home/orangepi/Downloads/image.png',(err, stdout, stderr) => {
+    if (err) {
+      console.error(err)
+      //process.exit(1)
+    } else {
+      console.log(`The stdout Buffer from shell: ${stdout.toString()}`)
+      console.log(`The stderr Buffer from shell: ${stderr.toString()}`)
+    }
+  });
+  // Wait for 4 seconds
+  await new Promise(resolve => setTimeout(resolve, 4000));
 
   printing = false; // Set printing to false after 10 seconds
   console.log('Printing set to false');
