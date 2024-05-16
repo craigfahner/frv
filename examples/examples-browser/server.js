@@ -107,17 +107,17 @@ function readGPIO(){
       gpioState = state;
       if(state == 0 && printing == false){
         console.log("button press detected");
-        // const client = wss.clients.values().next().value;
-        // if (client) {
-        //   // Sending the message
-        //   client.send('saveimage');
-        // } else {
-        //   console.log('No client connected');
-        // }
-        // try this: sends to all clients instead of just one
-        wss.clients.forEach(function each(client){
+        const client = wss.clients.values().next().value;
+        if (client) {
+          // Sending the message
           client.send('saveimage');
-        });
+        } else {
+          wss.clients.forEach(function each(theClient){
+            theClient.send('saveimage');
+          });        
+        }
+        // try this: sends to all clients instead of just one
+
 
         togglePrinting();
       }
