@@ -110,9 +110,12 @@ function readGPIO(){
         const client = wss.clients.values().next().value;
         if (client) {
           // Sending the message
+          console.log("client found, sending the saveImage message");
           client.send('saveimage');
         } else {
+          console.log("client not found, attempting to broadcast");
           wss.clients.forEach(function each(theClient){
+            console.log("sending saveImage message");
             theClient.send('saveimage');
           });        
         }
